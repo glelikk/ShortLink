@@ -23,7 +23,7 @@ namespace ShortLink.Application.Services
             else
             {
                 _sequence = new List<int>();
-                for (int i = firstId.Length - 1; i <= 0; i--)
+                for (int i = firstId.Length - 1; i >= 0; i--)
                 {
                     var index = _dictionary.IndexOf(firstId[i]);
                     if (index < 0)
@@ -40,12 +40,11 @@ namespace ShortLink.Application.Services
             var builder = new StringBuilder();
             lock (_sequence)
             {
-
+                Increment(_sequence);
                 for (int i = _sequence.Count - 1; i >= 0; i--)
                 {
                     builder.Append(_dictionary[_sequence[i]]);
                 }
-                Increment(_sequence);
             }
             return builder.ToString();
         }

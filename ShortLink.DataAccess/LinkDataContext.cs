@@ -14,9 +14,9 @@ namespace ShortLink.DataAccess
         public DbSet<Client> Clients { get; set; }
         public DbSet<Link> Links { get; set; }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Click>().HasRequired(x => x.Link).WithMany(x => x.Clicks);
-        }
+        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<Click>().HasRequired(x => x.Link).WithMany(x => x.Clicks);
+        //}
     }
 }

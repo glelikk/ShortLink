@@ -15,16 +15,19 @@ namespace ShortLink
     {
         public static void Initialize(IAppBuilder app)
         {
+            DIConfiguration(app);
+        }
+
+        private static void DIConfiguration(IAppBuilder app)
+        {
             var mvcContainer = new Container();
             var apiContainer = new Container();
 
             mvcContainer.Options.DefaultScopedLifestyle = new WebRequestLifestyle();
             apiContainer.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
 
-            DataAccessModule.Load(mvcContainer);
             DataAccessModule.Load(apiContainer);
 
-            ApplicationModule.Load(mvcContainer);
             ApplicationModule.Load(apiContainer);
 
             mvcContainer.RegisterMvcControllers(Assembly.GetExecutingAssembly());

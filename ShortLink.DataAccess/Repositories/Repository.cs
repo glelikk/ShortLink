@@ -9,7 +9,7 @@ namespace ShortLink.DataAccess.Repositories
 {
     public class Repository<T, TKey> : IRepository<T, TKey> where T : class
     {
-        private readonly DbContext _context;
+        protected readonly DbContext Context;
         private bool _disposed;
 
         public Repository(DbContext context)
@@ -18,41 +18,75 @@ namespace ShortLink.DataAccess.Repositories
             {
                 throw new ArgumentNullException(nameof(context));
             }
-            _context = context;
+            Context = context;
         }
         
         public virtual async Task<T> CreateAsync(T entity)
         {
-            _context.Set<T>().Add(entity);
-            await _context.SaveChangesAsync();
+            Context.Set<T>().Add(entity);
+            await Context.SaveChangesAsync();
+            return entity;
+        }
+
+        public virtual T Create(T entity)
+        {
+            Context.Set<T>().Add(entity);
+            Context.SaveChanges();
             return entity;
         }
 
         public virtual async Task<T> FindByIdAsync(TKey id)
         {
-            return await _context.Set<T>().FindAsync(id);
+            return await Context.Set<T>().FindAsync(id);
+        }
+
+        public virtual T FindById(TKey id)
+        {
+            return Context.Set<T>().Find(id);
         }
 
         public virtual async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> where)
         {
-            return await _context.Set<T>().FirstOrDefaultAsync(where);
+            return await Context.Set<T>().FirstOrDefaultAsync(where);
+        }
+
+        public virtual T FirstOrDefault(Expression<Func<T, bool>> where)
+        {
+            return Context.Set<T>().FirstOrDefault(where);
         }
 
         public virtual async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> where)
         {
-            return await _context.Set<T>().Where(where).ToListAsync();
+            return await Context.Set<T>().Where(where).ToListAsync();
+        }
+
+        public virtual IEnumerable<T> Find(Expression<Func<T, bool>> where)
+        {
+            return Context.Set<T>().Where(where).ToList();
         }
 
         public virtual async Task UpdateAsync(T entity)
         {
-            _context.Entry(entity).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            Context.Entry(entity).State = EntityState.Modified;
+            await Context.SaveChangesAsync();
+        }
+
+        public virtual void Update(T entity)
+        {
+            Context.Entry(entity).State = EntityState.Modified;
+            Context.SaveChanges();
         }
 
         public virtual async Task DeleteAsync(T entity)
         {
-            _context.Entry(entity).State = EntityState.Deleted;
-            await _context.SaveChangesAsync();
+            Context.Entry(entity).State = EntityState.Deleted;
+            await Context.SaveChangesAsync();
+        }
+
+        public virtual void Delete(T entity)
+        {
+            Context.Entry(entity).State = EntityState.Deleted;
+            Context.SaveChanges();
         }
 
         #region IDisposable implementation
@@ -63,7 +97,7 @@ namespace ShortLink.DataAccess.Repositories
             {
                 if (disposing)
                 {
-                    _context.Dispose();
+                    Context.Dispose();
                 }
             }
             _disposed = true;

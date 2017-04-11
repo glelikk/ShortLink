@@ -15,5 +15,19 @@ namespace ShortLink
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);            
         }
+
+        protected  void Application_PreRequestHandlerExecute(Object sender, EventArgs e)
+        {
+            var client =  HttpContext.Current.Request.Cookies["clientId"];
+            if (client == null)
+            {
+                client = new HttpCookie("clientId");
+                client.Value = Guid.NewGuid().ToString();
+                client.Expires = DateTime.Now.AddYears(1);
+                HttpContext.Current.Request.Cookies.Add(client);
+                HttpContext.Current.Response.Cookies.Add(client);
+            }
+        }
+
     }
 }
