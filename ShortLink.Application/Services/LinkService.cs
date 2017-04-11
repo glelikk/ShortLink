@@ -54,6 +54,16 @@ namespace ShortLink.Application.Services
             return result;
         }
 
+        public async Task<string> GetLink(string shortLink)
+        {
+            var link = await _linkRepository.FindByIdAsync(shortLink);
+            if (link == null)
+            {
+                throw new ObjectNotFoundException("Ссылка не существует");
+            }
+            return link.OriginalLink;
+        }
+
         #region IDisposable Implementatiom
 
         private bool _disposed;

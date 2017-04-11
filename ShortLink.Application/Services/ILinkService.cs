@@ -8,5 +8,6 @@ namespace ShortLink.Application.Services
     {
         Task<string> CreateLink(string link, string clientKey);
         Task<IEnumerable<LinkDTO>> ClientLinks(string clientKey);
+        Task<string> GetLink(string shortLink);
     }
 }
