@@ -6,8 +6,37 @@ namespace ShortLink.Application.Services
 {
     public class UniqueIdGenerator : IUniqueIdGenerator
     {
+        private static UniqueIdGenerator _instance;
+        private static readonly object Lock = new object();
         private readonly string _dictionary = "0123456789abcdefghijklmnopqrstuvwxyz";
         private readonly List<int> _sequence;
+
+        public static void Configure(string firstId)
+        {
+            lock (Lock)
+            {
+                if (_instance == null)
+                {
+                    _instance = new UniqueIdGenerator(firstId);
+                }
+                else
+                {
+                    throw new InvalidOperationException("Object already exist");
+                }
+            }
+        }
+
+        public static UniqueIdGenerator GetInstance()
+        {
+            lock (Lock)
+            {
+                if (_instance == null)
+                {
+                    _instance = new UniqueIdGenerator();
+                }
+            }
+            return _instance;
+        }
 
         public UniqueIdGenerator()
         {
@@ -28,7 +57,7 @@ namespace ShortLink.Application.Services
                     var index = _dictionary.IndexOf(firstId[i]);
                     if (index < 0)
                     {
-                        throw new ArgumentException("Начальный ключ не соответствует заданному словарю");
+                        throw new ArgumentException("Key does not match dictionary");
                     }
                     _sequence.Add(_dictionary.IndexOf(firstId[i]));
                 }

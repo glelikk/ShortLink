@@ -1,7 +1,11 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using System.Web.Http;
 using System.Web.Mvc;
 using Owin;
+using ShortLink.Application.Services;
+using ShortLink.DataAccess;
+using ShortLink.DataAccess.Repositories;
 using ShortLink.Modules;
 using SimpleInjector;
 using SimpleInjector.Integration.Web;
@@ -15,6 +19,7 @@ namespace ShortLink
     {
         public static void Initialize(IAppBuilder app)
         {
+            ConfigureUniqueIdentifierGenerator();
             DIConfiguration(app);
         }
 
@@ -26,8 +31,10 @@ namespace ShortLink
             mvcContainer.Options.DefaultScopedLifestyle = new WebRequestLifestyle();
             apiContainer.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
 
+            DataAccessModule.Load(mvcContainer);
             DataAccessModule.Load(apiContainer);
 
+            ApplicationModule.Load(mvcContainer);
             ApplicationModule.Load(apiContainer);
 
             mvcContainer.RegisterMvcControllers(Assembly.GetExecutingAssembly());
@@ -38,6 +45,21 @@ namespace ShortLink
 
             DependencyResolver.SetResolver(new SimpleInjectorDependencyResolver(mvcContainer));
             GlobalConfiguration.Configuration.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(apiContainer);
+        }
+
+        private static void ConfigureUniqueIdentifierGenerator()
+        {
+            string firstId = String.Empty;
+            using (var linkRepository = new LinkRepository(new LinkDataContext()))
+            {
+                var link = linkRepository.LastOrDefault();
+                if (link != null)
+                {
+                    firstId = link.Id;
+                }
+            }
+
+            UniqueIdGenerator.Configure(firstId);
         }
     }
 }

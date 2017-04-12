@@ -1,0 +1,23 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div>
+    <form ng-submit="getLink()">
+        <label for="url">Enter your long URL:</label>
+        <div class="input-group">
+            <input type="text" class="form-control" ng-model="urlForm.url" id="url" required />
+            <span class="input-group-btn">
+                <button type="submit" class="btn">GetLink</button>
+            </span>
+        </div>
+    </form>
+    <div id="resultUrl">
+        {{urlForm.shortUrl}}
+    </div>
+    <div ng-hide="urlForm.error == ''" id="errorMessage">
+        <label class="label label-danger">{{urlForm.error}}</label>
+    </div>
+
+</div>

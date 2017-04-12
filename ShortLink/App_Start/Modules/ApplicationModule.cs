@@ -12,21 +12,11 @@ namespace ShortLink.Modules
     {
         public static void Load(Container container)
         {
-            string firstId = String.Empty;
-            using (var linkRepository = new LinkRepository(new LinkDataContext()))
-            {
-                var link = linkRepository.LastOrDefault();
-                if (link != null)
-                {
-                    firstId = link.Id;
-                }
-            }
-            
-            container.Register<IUniqueIdGenerator>(() => new UniqueIdGenerator(firstId), Lifestyle.Singleton);
+            container.Register<IUniqueIdGenerator>(UniqueIdGenerator.GetInstance, Lifestyle.Singleton);
 
             var currentDomain = ConfigurationManager.AppSettings["CurrentDomain"];
-            container.Register<LinkServicePreferences>(() => new LinkServicePreferences {CurrentDomain = currentDomain}, Lifestyle.Scoped);
 
+            container.Register<LinkServicePreferences>(() => new LinkServicePreferences {CurrentDomain = currentDomain}, Lifestyle.Scoped);
             container.Register<ILinkService, LinkService>(Lifestyle.Scoped);
         }
     }

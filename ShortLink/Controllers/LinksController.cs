@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using ShortLink.Application.DTO;
 using ShortLink.Application.Services;
+using ShortLink.Models;
 
 namespace ShortLink.Controllers
 {
@@ -28,11 +27,13 @@ namespace ShortLink.Controllers
         }
 
        
-        public async Task<string> Post([FromBody]string url)
+        public async Task<LinkShortDTO> Post([FromBody]LinkRequest request)
         {
-            if (string.IsNullOrWhiteSpace(url))
-                throw new ArgumentException("URL не может быть пустым");
-            return await _linkService.CreateLink(url, ClientId);
+            if (!ModelState.IsValid)
+            {
+                throw new ArgumentException("Incorrect URL");
+            }
+            return await _linkService.CreateLink(request.Url, ClientId);
         }
 
 

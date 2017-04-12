@@ -28,7 +28,7 @@ namespace ShortLink.Application.Services
             _clickRepository = clickRepository;
         }
 
-        public async Task<string> CreateLink(string link, string clientKey)
+        public async Task<LinkShortDTO> CreateLink(string link, string clientKey)
         {
             var clientId = (await _clientRepository.FirstOrDefaultAsync(x => x.ClientKey == clientKey))?.Id ?? 0;
             if (clientId == 0)
@@ -43,7 +43,12 @@ namespace ShortLink.Application.Services
                 Id = _idGenerator.GetId()
             };
             await _linkRepository.CreateAsync(linkObj);
-            return linkObj.Id;
+            return new LinkShortDTO
+            {
+                OriginalLink = link,
+                Hash = linkObj.Id,
+                ShortLink = _preferences.CurrentDomain + linkObj.Id
+            };
         }
 
         public async Task<IEnumerable<LinkDTO>> ClientLinks(string clientKey)
@@ -70,7 +75,7 @@ namespace ShortLink.Application.Services
             
             if (link == null)
             {
-                throw new ObjectNotFoundException("Ссылка не существует");
+                return null;
             }
             await _clickRepository.CreateAsync(new Click
             {
