@@ -13,8 +13,8 @@
             </span>
         </div>
     </form>
-    <div id="resultUrl">
-        {{urlForm.shortUrl}}
+    <div id="resultUrl" ng-hide="urlForm.error != '' || urlForm.shortUrl == ''">
+        <mark><a href="{{urlForm.shortUrl}}">{{urlForm.shortUrl}}</a></mark>
     </div>
     <div ng-hide="urlForm.error == ''" id="errorMessage">
         <label class="label label-danger">{{urlForm.error}}</label>

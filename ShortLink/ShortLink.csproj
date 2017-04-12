@@ -171,7 +171,9 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Scripts\controllers\headerController.js" />
     <Content Include="Scripts\controllers\homeController.js" />
+    <Content Include="Scripts\controllers\listController.js" />
     <Content Include="Scripts\controllers\urlController.js" />
     <Content Include="Scripts\factories\listFactory.js" />
     <Content Include="Scripts\factories\urlFactory.js" />

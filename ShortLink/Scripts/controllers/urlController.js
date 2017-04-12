@@ -1,13 +1,9 @@
-﻿var UrlController = function ($scope, UrlFactory, ListFactory) {
+﻿var UrlController = function ($scope, UrlFactory) {
     $scope.urlForm = {
         url: '',
         shortUrl: '',
         error: ''
     };
-
-    $scope.urlList = {};
-
-    
 
     $scope.getLink = function () {
         var result = UrlFactory($scope.urlForm.url);
@@ -21,15 +17,6 @@
             }
         });
     }
-
-    $scope.getList = function () {
-        var result = ListFactory();
-        result.then(function (result) {
-            if (result.success) {
-                $scope.urlList = result.data;
-            } 
-        });
-    }
 }
 
-UrlController.$inject = ['$scope', 'UrlFactory', 'ListFactory'];
+UrlController.$inject = ['$scope', 'UrlFactory'];

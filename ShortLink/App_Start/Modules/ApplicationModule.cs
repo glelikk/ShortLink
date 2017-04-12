@@ -1,9 +1,6 @@
-﻿using System;
-using System.Configuration;
+﻿using System.Configuration;
 using ShortLink.Application.Preferences;
 using ShortLink.Application.Services;
-using ShortLink.DataAccess;
-using ShortLink.DataAccess.Repositories;
 using SimpleInjector;
 
 namespace ShortLink.Modules

@@ -6,8 +6,8 @@
     <title ng-bind="models.title"></title>
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.32/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.32/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
     @Scripts.Render("~/bundles/app")
 </head>
 <body>
@@ -21,10 +21,10 @@
                 </button>
                 <a href="/#/" class="navbar-brand">{{models.title}}</a>
             </div>
-            <div class="collapse navbar-collapse" id="navbar">
+            <div class="collapse navbar-collapse" id="navbar" ng-controller="HeaderController">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="/#/">Home</a></li>
-                    <li  ng-click="getList()"><a href="/#/links">Links</a></li>
+                    <li ng-class="{ active: isActive('/')}"><a href="/#/">Home</a></li>
+                    <li ng-class="{ active: isActive('/links')}"><a href="/#/links">Links</a></li>
                 </ul>
             </div>
         </div>
