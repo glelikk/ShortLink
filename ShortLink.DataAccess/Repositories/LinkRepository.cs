@@ -21,7 +21,7 @@ namespace ShortLink.DataAccess.Repositories
 
         public Task<Link> LastOrDefaultAsync()
         {
-            return Task.FromResult(LastOrDefault());
+            return Context.Set<Link>().OrderByDescending(x => x.CreationDate).FirstOrDefaultAsync(); ;
         }
 
         public override async Task<IEnumerable<Link>> FindAsync(Expression<Func<Link, bool>> where)

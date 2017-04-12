@@ -8,14 +8,14 @@ app.factory('ListFactory', ListFactory);
 var config = function($routeProvider) {
     $routeProvider.when('/links',
         {
-            templateUrl: 'home/list',
+            templateUrl: 'scripts/views/linksView.html',
             controller: ListController
         }).when('/',
         {
-            templateUrl: 'home/add',
+            templateUrl: 'scripts/views/homeView.html',
             controller: UrlController
         }).otherwise({
-            templateUrl: 'home/add',
+            templateUrl: 'scripts/views/homeView.html',
             controller: UrlController
     });
 };

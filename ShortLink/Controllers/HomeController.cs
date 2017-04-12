@@ -12,7 +12,6 @@ namespace ShortLink.Controllers
         {
             _linkService = linkService;
         }
-        // GET: Home
         public async Task<ActionResult> Index(string id)
         {
             if (!string.IsNullOrWhiteSpace(id))
@@ -23,16 +22,6 @@ namespace ShortLink.Controllers
                     return Redirect(link);
                 }
             }
-            return View();
-        }
-
-        public ActionResult List()
-        {
-            return View();
-        }
-
-        public ActionResult Add()
-        {
             return View();
         }
     }
