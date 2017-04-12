@@ -179,6 +179,7 @@
     <Content Include="Scripts\factories\urlFactory.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
+    <Content Include="Scripts\ngclipboard.min.js" />
     <Content Include="Scripts\views\homeView.html" />
     <Content Include="Scripts\views\linksView.html" />
     <Content Include="Web.config" />

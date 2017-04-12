@@ -1,5 +1,5 @@
 ﻿<div>
-    <div>
+    <div class="row">
         <form ng-submit="getLink()">
             <label for="url">Enter your long URL:</label>
             <div class="input-group">
@@ -10,7 +10,7 @@
             </div>
         </form>
     </div>
-    <div class="top-buffer" ng-hide="urlForm.shortUrl == ''">
+    <div class="row top-buffer" ng-hide="urlForm.shortUrl == ''">
         <mark><a href="{{urlForm.shortUrl}}" id="result">{{urlForm.shortUrl}}</a></mark>
         <button class="btn btn-sm" ngclipboard data-clipboard-target="#result">Copy</button>
     </div>

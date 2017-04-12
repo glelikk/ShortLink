@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ShortLink.Application.Tests
+﻿namespace ShortLink.Application.Tests
 {
     public class ServicesFixture
     {
