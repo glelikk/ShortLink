@@ -1,4 +1,4 @@
-﻿var app = angular.module('app', ['ngRoute']);
+﻿var app = angular.module('app', ['ngRoute', 'ngclipboard']);
 app.controller('HomeController', HomeController);
 app.controller('HeaderController', HeaderController);
 app.controller('UrlController', UrlController);

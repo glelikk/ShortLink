@@ -9,17 +9,17 @@
                 }
             ).
             success(function (data) {
-                if (data != null) {
+                if (data != null && data.success == undefined) {
                     deferredObject.resolve({
                         success: true,
                         data: data
                     });
                 } else {
-                    deferredObject.resolve({ success: false });
+                    deferredObject.resolve(data);
                 }
             }).
-            error(function () {
-                deferredObject.reject({ success: false });
+            error(function (data) {
+                deferredObject.resolve(data);
             });
 
         return deferredObject.promise;

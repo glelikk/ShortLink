@@ -6,14 +6,16 @@
     };
 
     $scope.getLink = function () {
+        $scope.urlForm.error = '';
         var result = UrlFactory($scope.urlForm.url);
         result.then(function (result) {
             if (result.success) {
                 $scope.urlForm.shortUrl = result.data.shortLink;
 
             } else {
+                console.log("error");
                 $scope.urlForm.shortUrl = '';
-                $scope.urlForm.error = 'Error. Try again.';
+                $scope.urlForm.error = result.message;
             }
         });
     }

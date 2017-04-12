@@ -29,18 +29,17 @@ namespace ShortLink.Controllers
        
         public async Task<LinkShortDTO> Post([FromBody]LinkRequest request)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || !IsValidUri(request.Url))
             {
                 throw new ArgumentException("Incorrect URL");
             }
             return await _linkService.CreateLink(request.Url, ClientId);
         }
 
-
-        
-        public async Task<string> Get(string id)
+        private bool IsValidUri(string uri)
         {
-            return await _linkService.GetLink(id);
+            Uri validatedUri;
+            return Uri.TryCreate(uri, UriKind.Absolute, out validatedUri);
         }
     }
 }
