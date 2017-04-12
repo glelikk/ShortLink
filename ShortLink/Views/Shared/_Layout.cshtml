@@ -29,16 +29,14 @@
             </div>
         </div>
     </nav>
-        
-        <div class="container">
+    <div class="container">
 
-            @RenderBody()
-            <hr />
-            <footer>
-                <p>&copy; @DateTime.Now.Year</p>
-            </footer>
-        </div>
-        <script src="~/Scripts/jquery-1.9.1.min.js"></script>
-        <script src="~/Scripts/bootstrap.min.js"></script>
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - {{models.title}}</p>
+        </footer>
+    </div>
+    @Scripts.Render("~/bundles/bootstrap")
 </body>
 </html>

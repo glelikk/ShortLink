@@ -10,6 +10,10 @@ namespace ShortLink
                 .IncludeDirectory("~/Scripts/factories", "*.js")
                 .IncludeDirectory("~/Scripts/controllers", "*.js")
                 .Include("~/Scripts/app.js"));
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap")
+                .Include("~/Scripts/jquery-1.9.1.min.js")
+                .Include("~/Scripts/bootstrap.min.js")
+                );
         }
     }
 }
