@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Moq;
@@ -69,6 +71,35 @@ namespace ShortLink.Application.Tests.Services
             Assert.Equal(_fixture.TestLink, link);
 
             _clickRepositoryMock.Verify(m => m.CreateAsync(It.IsAny<Click>()), Times.AtLeastOnce);
+        }
+
+        [Fact]
+        public async Task ClientLinks()
+        {
+            var target = CreateTarget();
+
+            _clientRepositoryMock.Setup(m => m.FirstOrDefaultAsync(It.IsAny<Expression<Func<Client, bool>>>()))
+                .ReturnsAsync(() => new Client
+                {
+                    Id = 0,
+                    ClientKey = _fixture.TestClientKey
+                });
+
+            _linkRepositoryMock.Setup(m => m.FindAsync(It.IsAny<Expression<Func<Link, bool>>>()))
+                .ReturnsAsync(() => new List<Link>
+                {
+                    new Link
+                    {
+                        Clicks = new List<Click> {new Click {LinkId = _fixture.TestHash}}
+                    },
+                    new Link(),
+                    new Link()
+                });
+            var result = await target.ClientLinks(_fixture.TestClientKey);
+            Assert.NotNull(result);
+            Assert.NotEmpty(result);
+            Assert.True(result.Any(x => x.Count > 0));
+            _clientRepositoryMock.Verify(m => m.CreateAsync(It.IsAny<Client>()), Times.AtLeastOnce);
         }
 
         private ILinkService CreateTarget()
