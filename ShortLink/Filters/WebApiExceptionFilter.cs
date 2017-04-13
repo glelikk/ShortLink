@@ -23,8 +23,6 @@ namespace ShortLink.Filters
         }
         public override void OnException(HttpActionExecutedContext context)
         {
-            var errorIdentity = Guid.NewGuid().ToString();
-
             if (_exceptionType.IsInstanceOfType(context.Exception))
             {
                 context.Response = new HttpResponseMessage(_statusCode)

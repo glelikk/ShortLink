@@ -2,6 +2,7 @@
 using System.Net;
 using System.Web.Http;
 using Newtonsoft.Json.Serialization;
+using ShortLink.Application.Exceptions;
 using ShortLink.Filters;
 
 namespace ShortLink
@@ -23,7 +24,7 @@ namespace ShortLink
 
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
-            config.Filters.Add(new WebApiExceptionFilter(typeof(ArgumentException), HttpStatusCode.BadRequest, config.Formatters.JsonFormatter));
+            config.Filters.Add(new WebApiExceptionFilter(typeof(InvalidArgumentException), HttpStatusCode.BadRequest, config.Formatters.JsonFormatter));
         }
     }
 }

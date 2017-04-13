@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="DTO\LinkDTO.cs" />
     <Compile Include="DTO\LinkShortDTO.cs" />
+    <Compile Include="Exceptions\InvalidArgumentException.cs" />
     <Compile Include="Preferences\LinkServicePreferences.cs" />
     <Compile Include="Services\ILinkService.cs" />
     <Compile Include="Services\IUniqueIdGenerator.cs" />

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using ShortLink.Application.DTO;
+using ShortLink.Application.Exceptions;
 using ShortLink.Application.Services;
 using ShortLink.Models;
 
@@ -31,7 +32,7 @@ namespace ShortLink.Controllers
         {
             if (!ModelState.IsValid || !IsValidUri(request.Url))
             {
-                throw new ArgumentException("Incorrect URL");
+                throw new InvalidArgumentException("Incorrect URL");
             }
             return await _linkService.CreateLink(request.Url, ClientId);
         }
