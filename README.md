@@ -1,2 +1,2 @@
 # ShortLink
-Site for create shot links.
+Site for create short links.
